@@ -1,4 +1,6 @@
 import math
+from functions.wayDij import way
+
 def dijkststa(Graph, source, printer = 1):
   # nodes from Zd1
   start = source[0]
@@ -29,17 +31,15 @@ def dijkststa(Graph, source, printer = 1):
       if alt < dist[neib] and visited[neib]!=1:
         dist[neib] = alt
         previous[neib] = u
-  print(dist,previous)
   if printer == 1:
     for i in range(len(source)-1):
       print('Answer for '+str(source[i+1]-1)+' = '+str(dist[source[i+1]-1]))
+      print('Path ', end='')
+      way(previous,source[i+1]-1)
+
   else:
     return [dist, previous]
     
-  
-
-
-
 def createNeib(Graph, source):
   neighbor = []
   arr = Graph[source]

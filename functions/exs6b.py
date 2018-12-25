@@ -1,27 +1,37 @@
 import numpy
 import copy
+import math
 
-def ex5(ip, routers):
+def ex6b(ip, Graph, count, routers):
   first = ip[0][0]
   classes = str
   mask = []
   if first<128:
     classes = 'A'
-    mask = [255,0,0,0]
   elif first<192:
     classes = 'B'
-    mask = [255,255,0,0] 
   elif first<224:
     classes = 'C'
-    mask = [255,255,255,0]
   elif first<240:
     classes = 'D'
-    mask = [255,255,255,255] 
-  
-  count = len(routers)
-  for i in range(len(routers)):
-    count +=routers[i][1]
 
+  subnet = 0
+  print(len(count[0])-count[0][0]-1)
+
+  for i in range(len(count[0])-count[0][0]):
+    if i!=0:
+      subnet += 1
+  subnet += routers[0][1]
+  
+  subnet = math.ceil(math.log(subnet,2))
+  abc = []
+  for i in range(8+subnet):
+    abc.append(1)
+  for i in range(32-8-subnet):
+    abc.append(0)
+  abc = numpy.packbits(abc)
+  mask = [255,0,0,0]
+  mask = numpy.bitwise_or(mask,abc)
   network = numpy.bitwise_and(ip,mask)
   node =  numpy.bitwise_and(ip,numpy.invert(numpy.uint8(mask)))
   broadcast = numpy.bitwise_or(ip,numpy.invert(numpy.uint8(mask)))
@@ -30,7 +40,7 @@ def ex5(ip, routers):
   hostMax = copy.deepcopy(broadcast)
   hostMax[0][3]-=1
   print('Ip = ',str(ip))
-  print('mask = ',str(mask))
+  print('Mask = ',str(mask))
   print('Class = ',str(classes))
   print('Network = ',str(network))
   print('Node = ',str(node))
