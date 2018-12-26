@@ -3,7 +3,7 @@ from functions.wayDij import way
 
 def dijkststa(Graph, source, printer = 1):
   # nodes from Zd1
-  start = source[0]
+  start = source[0]-1
 
   #
   dist = [] 

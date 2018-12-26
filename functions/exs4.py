@@ -35,7 +35,8 @@ def rip(Graph, delay = 0, time = 0):
 
   newRipMatrix = copy.deepcopy(ripMatrix)
 
-  for z in range(math.ceil(time/delay)):
+  adict1 = {}
+  for z in range(3):
     for i in range(len(ripMatrix)):
       for j in range(len(ripMatrix)):
         if (j in checkRipMatrix[i] and i!=j and ripMatrix[i][j][2]!=None):
@@ -45,7 +46,17 @@ def rip(Graph, delay = 0, time = 0):
               if(newRipMatrix[i][c][1]>=val or newRipMatrix[i][c][2]==None):
                 newRipMatrix[i][c][1] = val
                 newRipMatrix[i][c][2] = j
+      new = copy.deepcopy(newRipMatrix[i])
+      for b in range(len(newRipMatrix)):
+        if newRipMatrix[i][b][2]==None:
+          print(new[b][2])
+          new[b][2] = 0 
+          print(new[b][2])
+      adict1['in'+str(z)+str(i)] = copy.deepcopy(new)
+
     ripMatrix = copy.deepcopy(newRipMatrix)
+  scipy.io.savemat('./testmat1.mat', adict1)  
+
   adict = {}
   for i in range(10):
     print("Timeout for " +str(i))
