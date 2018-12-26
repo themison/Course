@@ -48,10 +48,10 @@ def rip(Graph, delay = 0, time = 0):
                 newRipMatrix[i][c][2] = j
       new = copy.deepcopy(newRipMatrix[i])
       for b in range(len(newRipMatrix)):
+        if new[b][1]!=0:
+          new[b][1]+=z+1;
         if newRipMatrix[i][b][2]==None:
-          print(new[b][2])
           new[b][2] = 0 
-          print(new[b][2])
       adict1['in'+str(z)+str(i)] = copy.deepcopy(new)
 
     ripMatrix = copy.deepcopy(newRipMatrix)
